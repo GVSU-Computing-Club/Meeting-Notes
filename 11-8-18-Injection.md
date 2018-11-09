@@ -3,11 +3,14 @@
 > See the previous meeting notes https://github.com/GVSU-Computing-Club/Meeting-Notes/blob/master/11-1-18-Exploiting.md 
 
 Resource for shell code: http://shell-storm.org/shellcode/ 
+
 ## Stack 5
+
+```
 ----------------------
-|					 |
+|                    |
 | Buffer (64 bytes)  | 
-|					 |
+|                    |
 ----------------------
 |   Base Pointer     |
 ----------------------
@@ -16,6 +19,8 @@ Resource for shell code: http://shell-storm.org/shellcode/
 |     0xbffff7f0     |
 |     Shell code     |
 ----------------------
+```
+
 We want to modify the return address to point to your shell code so you can do whatever you want.
 
 We are not able to modify code at in the folder, so we will run code from the home directory
@@ -67,6 +72,7 @@ A problem is that the location of the stack may change so....
 NOP is an instruction that means don't do anything.
 So we will fill out space the space between the return address and our shell code.
 
+```
 ----------------------
 | Return Pointer Addr| 
 ----------------------
@@ -83,6 +89,7 @@ So we will fill out space the space between the return address and our shell cod
 |     0xbffff7f0     |
 |     Shell code     |
 ----------------------
+```
 
 ```
 #!/usr/bin/env python
@@ -100,7 +107,7 @@ nopslide = "\x90"*100
 #The shellcode we are injecting 
 shellcode = ""
 
-payload = padding + address + noslide + bp
+payload = padding + address + noslide + shellcode
 
 print(payload)
 ```
